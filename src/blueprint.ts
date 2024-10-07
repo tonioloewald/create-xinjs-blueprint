@@ -113,6 +113,7 @@ export const toggle: XinBlueprint = (tag, factory) => {
     connectedCallback() {
       super.connectedCallback()
 
+      this.value = this.hasAttribute('checked')
       this.addEventListener('keydown', this.toggleChecked)
       this.setAttribute('tabindex', '0')
     }
