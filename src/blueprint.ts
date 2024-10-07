@@ -1,11 +1,7 @@
 import { XinBlueprint, PartsMap } from 'xinjs'
 
-interface SwissClockParts extends PartsMap {
-  assembly: SVGGElement
-  face: SVGCircleElement
-  hour: SVGPathElement
-  minute: SVGPolygonElement
-  second: SVGPathElement
+interface ToggleParts extends PartsMap {
+  valueHolder: HTMLInputElement
 }
 
 export const toggle: XinBlueprint = (tag, factory) => {
@@ -123,7 +119,7 @@ export const toggle: XinBlueprint = (tag, factory) => {
     render() {
       super.render()
 
-      const { valueHolder } = this.parts as { valueHolder: HTMLInputElement }
+      const { valueHolder } = this.parts as ToggleParts
       valueHolder.checked = this.value
       this.toggleAttribute('checked', this.value)
     }
