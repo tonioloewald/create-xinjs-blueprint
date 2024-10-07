@@ -1,0 +1,20 @@
+<title>Component Test</title>
+<script type="module">
+  const { makeComponent } = await import(
+    'https://cdn.jsdelivr.net/npm/xinjs@0.6.12/dist/module.js'
+  )
+
+  const blueprint = (await import('/dist/blueprint.js')).default
+  const { creator } = makeComponent('element-demo', blueprint)
+</script>
+<h1>Component Test</h1>
+<div>Before the element</div>
+<element-demo>
+  <div slot="on">on</div>
+  <div slot="off">off</div>
+</element-demo>
+<element-demo disabled>
+  <div slot="on">on</div>
+  <div slot="off">off</div>
+</element-demo>
+<div>After the element</div>

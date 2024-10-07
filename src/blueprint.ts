@@ -1,0 +1,159 @@
+import { XinBlueprint, PartsMap } from 'xinjs'
+
+interface SwissClockParts extends PartsMap {
+  assembly: SVGGElement
+  face: SVGCircleElement
+  hour: SVGPathElement
+  minute: SVGPolygonElement
+  second: SVGPathElement
+}
+
+export const toggle: XinBlueprint = (tag, factory) => {
+  const { Component, elements, vars } = factory
+  const { input, label, div, slot } = elements
+
+  class XinToggle extends Component {
+    value = false
+    disabled = false
+
+    get checked(): boolean {
+      return this.value
+    }
+
+    set checked(value: boolean) {
+      this.value = value
+    }
+
+    constructor() {
+      super()
+
+      this.initAttributes('disabled')
+    }
+
+    static styleSpec = {
+      ':host': {
+        display: 'inline-block',
+      },
+
+      ':host label': {
+        display: 'inline-flex',
+        gap: vars.toggleGap,
+        alignItems: 'center',
+      },
+
+      ':host::part(container)': {
+        display: 'block',
+        height: vars.toggleKnobSize,
+        lineHeight: vars.toggleKnobSize,
+        position: 'relative',
+      },
+
+      ':host::part(track)': {
+        margin: vars.toggleTrackInset,
+        height: vars.toggleTrackHeight,
+        width: vars.toggleTrackWidth,
+        borderRadius: vars.toggleTrackRadius,
+        background: vars.toggleTrackColor,
+        boxShadow: vars.toggleTrackShadow,
+      },
+
+      '[part=knob]': {
+        transition: vars.toggleTransition,
+        height: vars.toggleKnobSize,
+        width: vars.toggleKnobSize,
+        borderRadius: vars.toggleKnobRadius,
+        top: 0,
+        left: 0,
+        position: 'absolute',
+        background: vars.toggleOffColor,
+        boxShadow: vars.toggleKnobShadow,
+      },
+
+      'input:checked + div > [part=knob]': {
+        left: `calc(${vars.toggleTrackWidth} + ${vars.toggleTrackInset200} - ${vars.toggleKnobSize})`,
+        background: vars.toggleOnColor,
+      },
+
+      'input:not(:checked) + * + * > [name=on], input:checked + * + * > [name=off]':
+        {
+          display: 'none',
+        },
+    }
+
+    setChecked = () => {
+      const { input } = this.parts as { input: HTMLInputElement }
+      this.value = input.checked
+    }
+
+    toggleChecked = (event: KeyboardEvent) => {
+      if (!this.disabled && event.code === 'Space') {
+        this.value = !this.value
+        event.preventDefault()
+        event.stopPropagation()
+        this.queueRender(true)
+      }
+    }
+
+    content = () =>
+      label(
+        input({
+          hidden: true,
+          type: 'checkbox',
+          part: 'valueHolder',
+          onChange: this.setChecked,
+        }),
+        div(
+          { part: 'container' },
+          div({ part: 'track' }),
+          div({ part: 'knob' })
+        ),
+        div(slot({ name: 'on' }), slot({ name: 'off' }))
+      )
+
+    connectedCallback() {
+      super.connectedCallback()
+
+      this.addEventListener('keydown', this.toggleChecked)
+      this.setAttribute('tabindex', '0')
+    }
+
+    role = 'checkbox'
+
+    render() {
+      super.render()
+
+      const { valueHolder } = this.parts as { valueHolder: HTMLInputElement }
+      valueHolder.checked = this.value
+      this.toggleAttribute('checked', this.value)
+    }
+  }
+
+  return {
+    type: XinToggle,
+    styleSpec: {
+      ':root': {
+        _toggleTrackColor: 'lightgray',
+        _toggleOffColor: 'gray',
+        _toggleOnColor: 'limegreen',
+        _toggleKnobSize: '24px',
+        _toggleKnobRadius: vars.toggleKnobSize50,
+        _toggleTransition: 'ease-in-out 0.2s',
+        _toggleTrackWidth: '32px',
+        _toggleTrackInset: '8px',
+        _toggleTrackHeight: `calc(${vars.toggleKnobSize} - ${vars.toggleTrackInset200})`,
+        _toggleTrackRadius: vars.toggleTrackHeight50,
+        _toggleDisabledOpacity: '0.5',
+        _toggleKnobShadow:
+          'inset 0 1px 1px #fff8, inset 0 -1px 1px #0004, 0 2px 4px #0006',
+        _toggleTrackShadow: 'inset 0 1px 2px #0004',
+        _toggleGap: '8px',
+      },
+      ':host[disabled]': {
+        pointerEvents: 'none',
+        opacity: vars.toggleDisabledOpacity,
+      },
+    },
+  }
+}
+
+export default toggle
