@@ -9,16 +9,30 @@
 </script>
 <h1>Component Test</h1>
 <div>Before the element</div>
-<element-demo>
-  <div slot="on">on</div>
-  <div slot="off">off</div>
-</element-demo>
-<element-demo disabled>
-  <div slot="on">on</div>
-  <div slot="off">off</div>
-</element-demo>
-<element-demo checked disabled>
-  <div slot="on">on</div>
-  <div slot="off">off</div>
-</element-demo>
+<div style="display: flex; flex-direction: column">
+  <label>
+    <element-demo>
+      <div slot="on">on</div>
+      <div slot="off">off</div>
+    </element-demo>
+    <span>Basic Example</span>
+  </label>
+
+  <label>
+    <element-demo disabled>
+      <div slot="on">on</div>
+      <div slot="off">off</div>
+    </element-demo>
+    <span>Disabled</span>
+  </label>
+
+  <label>
+    <element-demo checked disabled>
+      <div slot="on">on</div>
+      <div slot="off">off</div>
+    </element-demo>
+    <span>Disabled and checked</span>
+  </label>
+</div>
+
 <div>After the element</div>
