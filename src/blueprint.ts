@@ -44,13 +44,18 @@ export const toggle: XinBlueprint = (tag, factory) => {
         position: 'relative',
       },
 
-      ':host::part(track)': {
+      '[part=track]': {
+        transition: vars.toggleTransition,
         margin: vars.toggleTrackInset,
         height: vars.toggleTrackHeight,
         width: vars.toggleTrackWidth,
         borderRadius: vars.toggleTrackRadius,
         background: vars.toggleTrackColor,
         boxShadow: vars.toggleTrackShadow,
+      },
+
+      'input:checked + div > [part=track]': {
+        background: vars.toggleTrackOnColor,
       },
 
       '[part=knob]': {
@@ -96,7 +101,6 @@ export const toggle: XinBlueprint = (tag, factory) => {
           hidden: true,
           type: 'checkbox',
           part: 'valueHolder',
-          onChange: this.setChecked,
         }),
         div(
           { part: 'container' },
@@ -110,6 +114,7 @@ export const toggle: XinBlueprint = (tag, factory) => {
       super.connectedCallback()
 
       this.value = this.hasAttribute('checked')
+      this.parts.valueHolder.addEventListener('change', this.setChecked)
       this.addEventListener('keydown', this.toggleChecked)
       this.setAttribute('tabindex', '0')
     }
@@ -122,6 +127,8 @@ export const toggle: XinBlueprint = (tag, factory) => {
       const { valueHolder } = this.parts as ToggleParts
       valueHolder.checked = this.value
       this.toggleAttribute('checked', this.value)
+
+      console.log('render', this.value, valueHolder.checked)
     }
   }
 
@@ -130,6 +137,7 @@ export const toggle: XinBlueprint = (tag, factory) => {
     styleSpec: {
       ':root': {
         _toggleTrackColor: 'lightgray',
+        _toggleTrackOnColor: vars.toggleTrackColor,
         _toggleOffColor: 'gray',
         _toggleOnColor: 'limegreen',
         _toggleKnobSize: '24px',

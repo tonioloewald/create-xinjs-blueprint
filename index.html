@@ -1,17 +1,41 @@
 <title>Component Test</title>
 <script type="module">
-  const { makeComponent } = await import(
-    'https://cdn.jsdelivr.net/npm/xinjs@0.6.12/dist/module.js'
-  )
+  import { makeComponent } from 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
+  const blueprint = (await import('./dist/blueprint.js')).default
 
-  const blueprint = (await import('/dist/blueprint.js')).default
-  const { creator } = makeComponent('element-demo', blueprint)
+  makeComponent('element-demo', blueprint)
 </script>
+<xin-loader>
+  <xin-blueprint
+    tag="xin-test"
+    src="https://tonioloewald.github.io/xin-test/dist/blueprint.js"
+  ></xin-blueprint>
+</xin-loader>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+  body {
+    font-family: 'Roboto Slab', serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+  }
+  .custom {
+    --toggle-track-height: 24px;
+    --toggle-track-radius: 12px;
+    --toggle-track-inset: -2px;
+    --toggle-knob-size: 20px;
+    --toggle-track-width: 48px;
+    --toggle-track-on-color: limegreen;
+    --toggle-on-color: gray;
+    --toggle-knob-shadow: none;
+  }
+</style>
 <h1>Component Test</h1>
 <div>Before the element</div>
 <div style="display: flex; flex-direction: column">
+  <foo-bar></foo-bar>
   <label>
-    <element-demo>
+    <element-demo id="basic" checked>
       <div slot="on">on</div>
       <div slot="off">off</div>
     </element-demo>
@@ -19,7 +43,15 @@
   </label>
 
   <label>
-    <element-demo disabled>
+    <element-demo id="custom" class="custom">
+      <div slot="on">on</div>
+      <div slot="off">off</div>
+    </element-demo>
+    <span>Customized CSS Variables</span>
+  </label>
+
+  <label>
+    <element-demo id="disabled" disabled>
       <div slot="on">on</div>
       <div slot="off">off</div>
     </element-demo>
@@ -27,7 +59,7 @@
   </label>
 
   <label>
-    <element-demo checked disabled>
+    <element-demo id="checked-disabled" checked disabled>
       <div slot="on">on</div>
       <div slot="off">off</div>
     </element-demo>
@@ -36,3 +68,29 @@
 </div>
 
 <div>After the element</div>
+
+<h2>Tests</h2>
+<xin-test description="blueprint hydrates" delay="100">
+  return ( document.querySelector('foo-bar').constructor !==
+  document.querySelector('element-demo').constructor )
+</xin-test>
+<xin-test description="basic element value is true" delay="100">
+  return document.querySelector('#basic').value
+</xin-test>
+<xin-test
+  description="custom element value is false"
+  delay="100"
+  expect="false"
+>
+  return document.querySelector('#custom').checked
+</xin-test>
+<xin-test description="clicked basic element" delay="200">
+  document.querySelector('#basic').parts.input.click(); return true
+</xin-test>
+<xin-test
+  description="basic element is false after clicking"
+  delay="500"
+  expect="false"
+>
+  return document.querySelector('#basic').value
+</xin-test>
