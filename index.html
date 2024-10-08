@@ -31,7 +31,7 @@
   }
 </style>
 <h1>Component Test</h1>
-<div>Before the element</div>
+<hr />
 <div style="display: flex; flex-direction: column">
   <foo-bar></foo-bar>
   <label>
@@ -67,7 +67,7 @@
   </label>
 </div>
 
-<div>After the element</div>
+<hr />
 
 <h2>Tests</h2>
 <xin-test description="blueprint hydrates" delay="100">
@@ -93,4 +93,11 @@
   expect="false"
 >
   return document.querySelector('#basic').value
+</xin-test>
+<xin-test description="pressed space on custom element" delay="100">
+  document.querySelector('#custom').dispatchEvent(new KeyboardEvent('keydown', {
+  charCode: 32, keyCode: 32, code: "Space", key: " ", })); return true
+</xin-test>
+<xin-test description="custom element is checked after space" delay="200">
+  return document.querySelector('#custom').value
 </xin-test>

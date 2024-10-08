@@ -127,8 +127,6 @@ export const toggle: XinBlueprint = (tag, factory) => {
       const { valueHolder } = this.parts as ToggleParts
       valueHolder.checked = this.value
       this.toggleAttribute('checked', this.value)
-
-      console.log('render', this.value, valueHolder.checked)
     }
   }
 
