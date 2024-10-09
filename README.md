@@ -1,16 +1,22 @@
 # xin-blueprint
 
-[github](https://github.com/tonioloewald/xin-blueprint/) | [live demo](https://tonioloewald.github.io/xin-blueprint/) | [npm](https://www.npmjs.com/package/xin-blueprint)
+[github](https://github.com/tonioloewald/create-xinjs-blueprint/) | [live demo](https://tonioloewald.github.io/create-xinjs-blueprint/) | [npm](https://www.npmjs.com/package/create-xinjs-blueprint)
 
-**blueprint src url** `https://tonioloewald.github.io/xin-blueprint/dist/blueprint.js`
+**blueprint src url** `https://tonioloewald.github.io/create-xinjs-blueprint/dist/blueprint.js`
 
-The example web-component is a toggle-switch.
+To create your own web-component blueprint, simply use `create-xinjs-blueprint` thus:
 
 ```
-<xin-toggle id="basic" checked>
+npx create-xinjs-blueprint my-custom-element
+```
+
+> The example web-component is a toggle-switch.
+
+```
+<create-xinjs-blueprint id="basic" checked>
   <div slot="on">on</div>
   <div slot="off">off</div>
-</xin-toggle>
+</create-xinjs-blueprint>
 ```
 
 ## Loading a blueprint
@@ -19,11 +25,11 @@ If you just want to bundle the component…
 
 ```
 import { makeComponent } from 'xinjs'
-import blueprint from 'xin-clock'
+import blueprint from 'create-xinjs-blueprint'
 
-const xinClock = makeBlueprint('xin-clock', blueprint).creator
+const { creator } = makeBlueprint( 'create-xinjs-blueprint', blueprint )
 
-document.body.append(xinClock())
+document.body.append( creator() )
 ```
 
 If you want to use a CDN:
@@ -33,9 +39,9 @@ If you want to use a CDN:
   import 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
 </script>
 <xin-loader>
-  <xin-blueprint tag="xin-clock" src="https://tonioloewald.github.io/xin-clock/dist/blueprint.js"></xin-blueprint>
+  <xin-blueprint tag="create-xinjs-blueprint" src="https://tonioloewald.github.io/create-xinjs-blueprint/dist/blueprint.js"></xin-blueprint>
 </xin-loader>
-<xin-clock></xin-clock>
+<create-xinjs-blueprint></create-xinjs-blueprint>
 ```
 
 You can also use `<xin-loader>` and `<xin-blueprint>` or `makeComponent` to load blueprints at runtime.
