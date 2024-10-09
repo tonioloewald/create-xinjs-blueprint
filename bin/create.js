@@ -29,6 +29,17 @@ try {
   process.exit(1)
 }
 
+function customizePackage(projectPath) {
+  const filePath = path.join(projectPath, 'package.json')
+  const rawData = fs.readFileSync(filePath, 'utf8')
+  const packageData = JSON.parse(rawData)
+  packageData.name = projectName
+  packageData.version = '0.0.1'
+  delete packageData.bin
+
+  fs.WriteFileSync(filePath, 'utf8', JSON.stringify(packageData, null, 2))
+}
+
 async function main() {
   try {
     console.log('Downloading files...')
@@ -36,7 +47,11 @@ async function main() {
 
     process.chdir(projectPath)
 
+    console.log('Cleaning up...')
     fs.rmSync(path.join(projectPath, 'bin'), { recursive: true })
+
+    console.log('Customizing package.json...')
+    customizePackage(projectPath)
 
     console.log(
       'Done! Just install bun if you have to, `bun install`, and `bun start`'
