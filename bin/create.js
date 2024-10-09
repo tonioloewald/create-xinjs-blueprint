@@ -48,7 +48,7 @@ function customizePackage() {
 }
 
 function replaceText(filename, pattern, replacement) {
-  const filePath = path.join(projectPath, fileName)
+  const filePath = path.join(projectPath, filename)
   const text = fs.readFileSync(filePath, 'utf8')
   fs.writeFileSync(filePath, text.replace(pattern, replacement), 'utf8')
 }
