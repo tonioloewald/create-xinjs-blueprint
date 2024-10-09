@@ -1,9 +1,9 @@
-<title>Component Test</title>
+<title>xin-toggle</title>
 <script type="module">
   import { makeComponent } from 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
   const blueprint = (await import('./dist/blueprint.js')).default
 
-  makeComponent('element-demo', blueprint)
+  makeComponent('xin-toggle', blueprint)
 </script>
 <xin-loader>
   <xin-blueprint
@@ -30,39 +30,39 @@
     --toggle-knob-shadow: none;
   }
 </style>
-<h1>Component Test</h1>
+<h1>&lt;xin-toggle&gt; test</h1>
 <hr />
 <div style="display: flex; flex-direction: column">
   <foo-bar></foo-bar>
   <label>
-    <element-demo id="basic" checked>
+    <xin-toggle id="basic" checked>
       <div slot="on">on</div>
       <div slot="off">off</div>
-    </element-demo>
+    </xin-toggle>
     <span>Basic Example</span>
   </label>
 
   <label>
-    <element-demo id="custom" class="custom">
+    <xin-toggle id="custom" class="custom">
       <div slot="on">on</div>
       <div slot="off">off</div>
-    </element-demo>
+    </xin-toggle>
     <span>Customized CSS Variables</span>
   </label>
 
   <label>
-    <element-demo id="disabled" disabled>
+    <xin-toggle id="disabled" disabled>
       <div slot="on">on</div>
       <div slot="off">off</div>
-    </element-demo>
+    </xin-toggle>
     <span>Disabled</span>
   </label>
 
   <label>
-    <element-demo id="checked-disabled" checked disabled>
+    <xin-toggle id="checked-disabled" checked disabled>
       <div slot="on">on</div>
       <div slot="off">off</div>
-    </element-demo>
+    </xin-toggle>
     <span>Disabled and checked</span>
   </label>
 </div>
@@ -70,9 +70,8 @@
 <hr />
 
 <h2>Tests</h2>
-<xin-test description="blueprint hydrates" delay="100">
-  return ( document.querySelector('foo-bar').constructor !==
-  document.querySelector('element-demo').constructor )
+<xin-test description="xin-toggle registered" delay="100">
+  return ( document.querySelector('xin-toggle').constructor !== HTMLElement )
 </xin-test>
 <xin-test description="basic element value is true" delay="100">
   return document.querySelector('#basic').value

@@ -14,6 +14,13 @@ if (process.argv.length < 3) {
 }
 
 const projectName = process.argv[2]
+
+if (!projectName.match(/\w+-\w+/)) {
+  console.log('Your project name is used as a custom-element tagName')
+  console.log('It should be something like "my-tag" or "some-other-tag"')
+  process.exit(1)
+}
+
 const currentPath = process.cwd()
 const projectPath = path.join(currentPath, projectName)
 const git_repo = 'https://github.com/tonioloewald/create-xinjs-blueprint.git'
@@ -29,7 +36,7 @@ try {
   process.exit(1)
 }
 
-function customizePackage(projectPath) {
+function customizePackage() {
   const filePath = path.join(projectPath, 'package.json')
   const rawData = fs.readFileSync(filePath, 'utf8')
   const packageData = JSON.parse(rawData)
@@ -38,6 +45,12 @@ function customizePackage(projectPath) {
   delete packageData.bin
 
   fs.writeFileSync(filePath, JSON.stringify(packageData, null, 2), 'utf8')
+}
+
+function replaceText(filename, pattern, replacement) {
+  const filePath = path.join(projectPath, fileName)
+  const text = fs.readFileSync(filePath, 'utf8')
+  fs.writeFileSync(filePath, text.replace(pattern, replacement), 'utf8')
 }
 
 async function main() {
@@ -49,9 +62,12 @@ async function main() {
 
     console.log('Cleaning up...')
     fs.rmSync(path.join(projectPath, 'bin'), { recursive: true })
+    fs.rmSync(path.join(projectPath, '.git'), { recursive: true })
+    replaceText('index.html', /\bxin-toggle\b/g, projectName)
+    replaceText('README.md', /\bxin-blueprint\b/g, projectName)
 
     console.log('Customizing package.json...')
-    customizePackage(projectPath)
+    customizePackage()
 
     console.log(
       'Done! Just install bun if you have to, `bun install`, and `bun start`'
