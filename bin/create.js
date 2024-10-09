@@ -37,7 +37,7 @@ function customizePackage(projectPath) {
   packageData.version = '0.0.1'
   delete packageData.bin
 
-  fs.WriteFileSync(filePath, 'utf8', JSON.stringify(packageData, null, 2))
+  fs.writeFileSync(filePath, 'utf8', JSON.stringify(packageData, null, 2))
 }
 
 async function main() {
