@@ -1,4 +1,4 @@
-# xin-blueprint
+# create-xinjs-blueprint
 
 [github](https://github.com/tonioloewald/create-xinjs-blueprint/) | [live demo](https://tonioloewald.github.io/create-xinjs-blueprint/) | [npm](https://www.npmjs.com/package/create-xinjs-blueprint)
 

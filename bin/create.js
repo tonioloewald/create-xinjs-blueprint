@@ -69,9 +69,17 @@ async function main() {
     console.log('Customizing package.json...')
     customizePackage()
 
+    console.log('Done! Next steps…')
+    console.log('- cd ' + projectName)
+    console.log('- install bun if needed')
+    console.log('- bun install')
+    console.log('- bun start')
     console.log(
-      'Done! Just install bun if you have to, `bun install`, and `bun start`'
+      '- got to http://localhost:8021 in browser to view the live demo'
     )
+    console.log('- create a [PUBLIC] github repo for the project')
+    console.log('- switch on Github Pages for the live demo to work')
+    console.log('- publish on npm for the npm link to work')
   } catch (error) {
     console.log(error)
   }
