@@ -1,16 +1,23 @@
 <title>xin-toggle</title>
 <script type="module">
-  import { makeComponent } from 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
-  const blueprint = (await import('./dist/blueprint.js')).default
-
-  makeComponent('xin-toggle', blueprint)
+  import {
+    blueprint,
+    blueprintLoader,
+  } from 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
+  const { protocol, host } = window.location
+  document.body.append(
+    blueprintLoader(
+      blueprint({
+        tag: 'xin-toggle',
+        src: `${protocol}//${host}/dist/blueprint.js`,
+      }),
+      blueprint({
+        tag: 'xin-test',
+        src: 'https://tonioloewald.github.io/xin-test/dist/blueprint.js',
+      })
+    )
+  )
 </script>
-<xin-loader>
-  <xin-blueprint
-    tag="xin-test"
-    src="https://tonioloewald.github.io/xin-test/dist/blueprint.js"
-  ></xin-blueprint>
-</xin-loader>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
   body {
