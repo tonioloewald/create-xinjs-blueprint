@@ -5,11 +5,18 @@
     blueprintLoader,
   } from 'https://cdn.jsdelivr.net/npm/xinjs@0.7.1/dist/module.js'
   const { protocol, host } = window.location
+
+  // blueprintLoader
   document.body.append(
     blueprintLoader(
       blueprint({
         tag: 'xin-toggle',
-        src: `${protocol}//${host}/dist/blueprint.js`,
+        src:
+          host === 'tonioloewald.github.io'
+            ? // live demo
+              `https://tonioloewald.github.io/create-xinjs-blueprint/dist/blueprint.js`
+            : // local test
+              `${protocol}//${host}/dist/blueprint.js`,
       }),
       blueprint({
         tag: 'xin-test',
