@@ -4,6 +4,10 @@
   "main": "./dist/blueprint.js",
   "exports": "./dist/blueprint.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tonioloewald/create-xinjs-blueprint.git"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
