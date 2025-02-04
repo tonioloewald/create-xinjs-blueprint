@@ -1,6 +1,6 @@
 {
   "name": "create-xinjs-blueprint",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "main": "./dist/blueprint.js",
   "exports": "./dist/blueprint.js",
   "type": "module",
@@ -12,6 +12,7 @@
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
+    "chokidar": "^4.0.3"
     "eslint": "^8.57.1",
     "prettier": "^2.8.8",
     "xinjs": "^0.7.1",
