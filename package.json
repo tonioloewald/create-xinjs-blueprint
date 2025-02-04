@@ -1,6 +1,6 @@
 {
   "name": "create-xinjs-blueprint",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "main": "./dist/blueprint.js",
   "exports": "./dist/blueprint.js",
   "type": "module",
