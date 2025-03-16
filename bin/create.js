@@ -24,6 +24,11 @@ if (!projectName.match(/\w+-\w+/)) {
 const currentPath = process.cwd()
 const projectPath = path.join(currentPath, projectName)
 const git_repo = 'https://github.com/tonioloewald/create-xinjs-blueprint.git'
+const filePath = path.join(projectPath, 'package.json')
+const rawData = fs.readFileSync(filePath, 'utf8')
+const packageData = JSON.parse(rawData)
+
+console.log(`create-xinjs-blueprint ${packageData.version}`)
 
 try {
   fs.mkdirSync(projectPath)
@@ -37,9 +42,6 @@ try {
 }
 
 function customizePackage() {
-  const filePath = path.join(projectPath, 'package.json')
-  const rawData = fs.readFileSync(filePath, 'utf8')
-  const packageData = JSON.parse(rawData)
   packageData.name = projectName
   packageData.version = '0.0.1'
   delete packageData.bin
