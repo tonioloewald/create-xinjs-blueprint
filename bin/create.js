@@ -24,11 +24,6 @@ if (!projectName.match(/\w+-\w+/)) {
 const currentPath = process.cwd()
 const projectPath = path.join(currentPath, projectName)
 const git_repo = 'https://github.com/tonioloewald/create-xinjs-blueprint.git'
-const filePath = path.join(projectPath, 'package.json')
-const rawData = fs.readFileSync(filePath, 'utf8')
-const packageData = JSON.parse(rawData)
-
-console.log(`create-xinjs-blueprint ${packageData.version}`)
 
 try {
   fs.mkdirSync(projectPath)
@@ -42,6 +37,12 @@ try {
 }
 
 function customizePackage() {
+  const filePath = path.join(projectPath, 'package.json')
+  const rawData = fs.readFileSync(filePath, 'utf8')
+  const packageData = JSON.parse(rawData)
+
+  console.log(`create-xinjs-blueprint ${packageData.version}`)
+
   packageData.name = projectName
   packageData.version = '0.0.1'
   delete packageData.bin
@@ -62,16 +63,20 @@ async function main() {
 
     process.chdir(projectPath)
 
+    console.log('Customizing package.json...')
+    customizePackage()
+
     console.log('Cleaning up...')
     fs.rmSync(path.join(projectPath, 'bin'), { recursive: true })
     fs.rmSync(path.join(projectPath, '.git'), { recursive: true })
-    replaceText('index.html', /\bxin-toggle\b/g, projectName)
+    replaceText(
+      'index.html',
+      /\b(xin-toggle|create-xinjs-blueprint)\b/g,
+      projectName
+    )
     replaceText('src/blueprint.ts', /\bxin-toggle\b/g, projectName)
     replaceText('README.md', /\bcreate-xinjs-blueprint\b/g, projectName)
     replaceText('package.json', /\bcreate-xinjs-blueprint\b/g, projectName)
-
-    console.log('Customizing package.json...')
-    customizePackage()
 
     console.log('Done! Next steps…')
     console.log('- cd ' + projectName)
