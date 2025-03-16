@@ -64,7 +64,9 @@ async function main() {
     fs.rmSync(path.join(projectPath, 'bin'), { recursive: true })
     fs.rmSync(path.join(projectPath, '.git'), { recursive: true })
     replaceText('index.html', /\bxin-toggle\b/g, projectName)
+    replaceText('src/blueprint.ts', /\bxin-toggle\b/g, projectName)
     replaceText('README.md', /\bcreate-xinjs-blueprint\b/g, projectName)
+    replaceText('package.json', /\bcreate-xinjs-blueprint\b/g, projectName)
 
     console.log('Customizing package.json...')
     customizePackage()

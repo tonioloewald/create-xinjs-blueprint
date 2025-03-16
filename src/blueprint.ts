@@ -1,14 +1,27 @@
-import { XinBlueprint, PartsMap } from 'xinjs'
+/*!
+# xin-toggle
 
+Information about the `<xin-toggle>` component blueprint.
+*/
+
+import type { XinBlueprint, PartsMap } from 'xinjs'
+import { compareSemanticVersion } from './compare-semantic-version'
 interface ToggleParts extends PartsMap {
   valueHolder: HTMLInputElement
 }
 
-export const toggle: XinBlueprint = (tag, factory) => {
-  const { Component, elements, vars } = factory
+// v0.8.5 required for async blueprints
+const REQUIRED_VERSION = '0.8.5'
+
+export const blueprint: XinBlueprint = async (tag, factory) => {
+  const { Component, elements, vars, version } = factory
   const { input, label, div, slot } = elements
 
-  class XinToggle extends Component {
+  if (compareSemanticVersion(REQUIRED_VERSION, version) < 0) {
+    throw new Error(`blueprint requires xinjs ${REQUIRED_VERSION}`)
+  }
+
+  class WebComponent extends Component {
     value = false
     disabled = false
 
@@ -131,7 +144,7 @@ export const toggle: XinBlueprint = (tag, factory) => {
   }
 
   return {
-    type: XinToggle,
+    type: WebComponent as typeof Component,
     styleSpec: {
       ':root': {
         _toggleTrackColor: 'lightgray',
@@ -159,4 +172,4 @@ export const toggle: XinBlueprint = (tag, factory) => {
   }
 }
 
-export default toggle
+export default blueprint
